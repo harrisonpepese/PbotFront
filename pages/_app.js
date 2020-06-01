@@ -2,6 +2,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Link from 'next/link'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -17,6 +18,11 @@ export default function MyApp({ Component, pageProps }) {
       <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6">Pbot</Typography>
+          <Link href="/fluxo">
+          <Typography variant="h6">Fluxo</Typography>
+            </Link>
+          <Link href="/estado">
+          <Typography variant="h6">Estado</Typography></Link>
         </Toolbar>
       </AppBar>
       <Grid container className={classes.root}>
