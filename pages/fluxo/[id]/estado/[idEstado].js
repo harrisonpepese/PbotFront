@@ -6,8 +6,8 @@ import api from "../../../../services/api";
 export default () => {
   const router = useRouter();
   const { id, idEstado } = router.query;
-  const [fluxo, setFluxo] = useState({});
-  const [estado, setEstado] = useState({});
+  const [fluxo, setFluxo] = useState(null);
+  const [estado, setEstado] = useState(null);
   const Load = () => {
     if (!id) {
       return;
@@ -16,12 +16,15 @@ export default () => {
       .get(`fluxo/${id}`)
       .then((res) => {
         setFluxo(res.data);
-        if (fluxo.estados && idEstado) {
-          setEstado(fluxo.estados.find((e) => e._id == idEstado));
+        if (res.data && idEstado) {
+          setEstado(res.data.estados.find((e) => e._id == idEstado));
         }
       })
       .catch(e=>console.log(e));
   };
-  useEffect(Load, [id]);
-  return <EstadoForm Fluxo={fluxo} estado={estado} />;
+  useEffect(Load, [ id, idEstado ]);
+
+  return (<div>
+    {fluxo && estado?<EstadoForm estado={estado} Fluxo={fluxo}/>:<p/>}
+  </div>)
 };

@@ -23,6 +23,9 @@ export default () => {
       .then((res) => setFluxo(res.data))
       .catch((e) => e);
   };
+  const criarEstado = () => {
+    router.push(`/fluxo/${id}/estado`)
+  }
   const editarEstado = (idEstado) => {
     router.push(`/fluxo/${id}/estado/${idEstado}`)
   }
@@ -34,15 +37,19 @@ export default () => {
       <Typography>{fluxo.textoFalha}</Typography>
       <Typography>{fluxo.estadoInicial}</Typography>
       <Paper elevation={2}>
-        <List subheader={<ListSubheader>Estados</ListSubheader>}>
-          {fluxo.estados.length? fluxo.estados.map((e) => (
-            <ListItem button key={e._id} onClick={event=>editarEstado(e._id)}>
-                <ListItemText>{e.nome}</ListItemText>
-                <ListItemSecondaryAction>
-                  <Button>editar</Button>
-                </ListItemSecondaryAction>
+        <List subheader={
+          <ListSubheader>Estados
+            <Button onClick={e => criarEstado()}>Criar</Button>
+          </ListSubheader>
+        }>
+          {fluxo.estados.length ? fluxo.estados.map((e) => (
+            <ListItem button key={e._id} onClick={event => editarEstado(e._id)}>
+              <ListItemText>{e.nome}</ListItemText>
+              <ListItemSecondaryAction>
+                <Button>editar</Button>
+              </ListItemSecondaryAction>
             </ListItem>
-          )):<div/>}
+          )) : <div />}
         </List>
       </Paper>
     </div>
