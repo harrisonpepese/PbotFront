@@ -47,7 +47,7 @@ export default function Variants() {
     setTexto(e.target.value);
   };
   const iniciarChat = async () => {
-    const { data } = await api.post("iniciarConversa/helloworld");
+    const { data } = await api.post("converse/helloworld");
     if (data) {
       setChat(data);
       console.log(data);
@@ -55,7 +55,7 @@ export default function Variants() {
   };
 
   const conversar = async () => {
-    const { data } = await api.post(`conversar/${chat._id}`, { text: texto });
+    const { data } = await api.post(`converse/helloworld/${chat._id}`, { text: texto });
     if (data) {
       setChat(data);
       console.log(data);
@@ -68,8 +68,8 @@ export default function Variants() {
       <CardHeader title="Chat Demo" className={classes.title} />
       <CardContent className={classes.content}>
         {chat._id ? (
-          chat.messagens.map((m) => (
-            <MessageContent text={m.texto} enviadoPelo={m.enviadoPelo} />
+          chat.messages.map((m) => (
+            <MessageContent text={m.text} enviadoPelo={m.isFrom} />
           ))
         ) : (
           <div />

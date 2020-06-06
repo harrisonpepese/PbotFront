@@ -8,16 +8,17 @@ export default () => {
   const { id, idEstado } = router.query;
   const [fluxo, setFluxo] = useState(null);
   const [estado, setEstado] = useState(null);
+  console.log(estado);
   const Load = () => {
     if (!id) {
       return;
     }
     api
-      .get(`fluxo/${id}`)
+      .get(`flux/${id}`)
       .then((res) => {
         setFluxo(res.data);
-        if (res.data && idEstado) {
-          setEstado(res.data.estados.find((e) => e._id == idEstado));
+        if (res.data.states && idEstado) {
+          setEstado(res.data.states.find((e) => e._id == idEstado));
         }
       })
       .catch(e=>console.log(e));

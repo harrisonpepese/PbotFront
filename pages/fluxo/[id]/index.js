@@ -16,10 +16,10 @@ import {
 export default () => {
   const router = useRouter();
   const { id } = router.query;
-  const [fluxo, setFluxo] = useState({ estados: [] });
+  const [fluxo, setFluxo] = useState({ states: [] });
   const Load = () => {
     api
-      .get(`fluxo/${id}`)
+      .get(`flux/${id}`)
       .then((res) => setFluxo(res.data))
       .catch((e) => e);
   };
@@ -42,9 +42,9 @@ export default () => {
             <Button onClick={e => criarEstado()}>Criar</Button>
           </ListSubheader>
         }>
-          {fluxo.estados.length ? fluxo.estados.map((e) => (
+          {fluxo.states.length ? fluxo.states.map((e) => (
             <ListItem button key={e._id} onClick={event => editarEstado(e._id)}>
-              <ListItemText>{e.nome}</ListItemText>
+              <ListItemText>{e.name}</ListItemText>
               <ListItemSecondaryAction>
                 <Button>editar</Button>
               </ListItemSecondaryAction>

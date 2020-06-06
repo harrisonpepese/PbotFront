@@ -26,7 +26,7 @@ export default () => {
   const [fluxos, setFluxos] = useState([]);
   const Load = () => {
     api
-      .get("fluxo")
+      .get("flux")
       .then((res) => {
         setFluxos(res.data);
       })

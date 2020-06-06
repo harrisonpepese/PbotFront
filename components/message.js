@@ -8,10 +8,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default (props) => {
-  const {text,enviadoPelo} = props; 
+  const { text, enviadoPelo } = props;
+  console.log(props)
   const classes = useStyles();
   const direction = (enviadoPelo) => {
-    if (enviadoPelo == 2) {
+    if (enviadoPelo == 'bot') {
       return "row";
     }
     return "row-reverse";
@@ -20,7 +21,9 @@ export default (props) => {
     <Box display="flex" flexDirection={direction(enviadoPelo)}>
       <Box>
         <Paper className={classes.paper}>
-          <Typography>{text}</Typography>
+          <Typography>
+              {text}
+          </Typography>
         </Paper>
       </Box>
     </Box>

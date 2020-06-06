@@ -32,66 +32,64 @@ export default function EstadoPage(props) {
   const { Fluxo, estado = {} } = props;
   const router = useRouter();
   const classes = useStyles();
-  const [nome, setNome] = useState(estado.nome);
-  const [estados] = useState(Fluxo.estados || [])
-  const [textoInicial, setTextoInicial] = useState(estado.textoInicial || null);
-  const [textoFalha, setTextoFalha] = useState(estado.textoFalha || null);
-  const [Tipo, setTipo] = useState(estado.tipo || '');
-  const [tipoEntrada, setTipoEntrada] = useState(estado.tipoEntrada || '');
+  const [nome, setNome] = useState(estado.name);
+  const [estados] = useState(Fluxo.states || [])
+  const [textoInicial, setTextoInicial] = useState(estado.text || null);
+  const [textoFalha, setTextoFalha] = useState(estado.tryFailText || null);
+  const [Tipo, setTipo] = useState(estado.type || '');
+  const [tipoEntrada, setTipoEntrada] = useState(estado.inputType || '');
   const [proximoEstado, setProximoEstado] = useState(
-    estado.proximoEstado || null
+    estado.nextState || null
   );
-  const [estadoFalha, setEstadoFalha] = useState(estado.estadoFalha || null);
-  const [campo, setCampo] = useState([]);
-  const [opcoes, setOpcoes] = useState([
-    {
-      TextoOpcao: "Sorriso",
-      RespostasValidas: [
-        {
-          texto: 'Ronaldo'
-        },
-        {
-          texto: 'Isso Não é legal'
-        },
-      ]
-    }
-  ]);
+  const [maxTryes,setMaxTryes] = useState(estado.maxTryes || 1);
+  const [estadoFalha, setEstadoFalha] = useState(estado.erroState || null);
+  const [campo, setCampo] = useState(estado.field);
+  const [opcoes, setOpcoes] = useState(estado.options || []);
   const Submit = () => {
     if (estado._id) {
       api
-        .put(`fluxo/${Fluxo._id}/estado/${estado._id}`, {
-          nome,
-          textoInicial,
-          textoFalha,
-          tipo: Tipo,
-          tipoEntrada,
-          proximoEstado,
+        .put(`flux/${Fluxo._id}/state/${estado._id}`, {
+          name:nome,
+          text:textoInicial,
+          tryFailText:textoFalha,
+          type: Tipo,
+          inputType:tipoEntrada,
+          nextState:proximoEstado,
+          erroState:estadoFalha,
+          field:campo,
+          options:opcoes,
+          maxTryes
         })
         .then((res) => {
           router.back()
         });
     } else {
       api
-        .post(`fluxo/${Fluxo._id}/estado`, {
-          nome,
-          textoInicial,
-          textoFalha,
-          tipo: Tipo,
-          tipoEntrada,
-          proximoEstado,
+        .post(`flux/${Fluxo._id}/state`, {
+          name:nome,
+          text:textoInicial,
+          tryFailText:textoFalha,
+          type: Tipo,
+          inputType:tipoEntrada,
+          nextState:proximoEstado,
+          erroState:estadoFalha,
+          field:campo,
+          options:opcoes,
+          maxTryes
         })
         .then((res) => {
-          console.log(res);
+          router.back()
         });
     }
   };
   const tipoSwitch = (tipo) => {
     switch (tipo) {
-      case 'dado':
+      case 'validation':
+      case 'input':
         return (
           <Dado campo={campo} state={setCampo}/>
         )
-      case 'opcoes':
+      case 'question':
         return (
           <Opcoes opcoes={opcoes} state={updateopcao} estados={estados} />
         )
@@ -113,12 +111,12 @@ export default function EstadoPage(props) {
           <Select
             value={tipoEntrada}
             onChange={(e) => setTipoEntrada(e.target.value)}
-          >
-            <MenuItem value={1}>texto</MenuItem>
-            <MenuItem value={2}>numero</MenuItem>
-            <MenuItem value={3}>telefone</MenuItem>
-            <MenuItem value={4}>Cep</MenuItem>
-            <MenuItem value={5}>CPF/CNPJ</MenuItem>
+          > 
+          <MenuItem value='any'>qualquer</MenuItem>
+            <MenuItem value='text'>texto</MenuItem>
+            <MenuItem value='number'>numero</MenuItem>
+            <MenuItem value='phone'>telefone</MenuItem>
+            <MenuItem value='email'>email</MenuItem>
           </Select>
         </FormControl>
       </div>
@@ -145,8 +143,9 @@ export default function EstadoPage(props) {
             value={proximoEstado}
             onChange={(e) => setProximoEstado(e.target.value)}
           >
+            <MenuItem value={null}>nenhum</MenuItem>
             {estados.map((e) => (
-              <MenuItem value={e._id}>{e.nome}</MenuItem>
+              <MenuItem value={e._id}>{e.name}</MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -156,8 +155,9 @@ export default function EstadoPage(props) {
             value={estadoFalha}
             onChange={(e) => setEstadoFalha(e.target.value)}
           >
+            <MenuItem value={null}>nenhum</MenuItem>
             {estados.map((e) => (
-              <MenuItem value={e._id}>{e.nome}</MenuItem>
+              <MenuItem value={e._id}>{e.name}</MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -167,11 +167,12 @@ export default function EstadoPage(props) {
           <InputLabel>Tipo Estado</InputLabel>
           <Select value={Tipo} onChange={(e) => setTipo(e.target.value)}>
             <MenuItem value={"info"}>info</MenuItem>
-            <MenuItem value={"dado"}>dado</MenuItem>
-            <MenuItem value={"opcoes"}>opcoes</MenuItem>
-            <MenuItem value={"integracao"}>integracao</MenuItem>
+            <MenuItem value={"input"}>dado</MenuItem>
+            <MenuItem value={"question"}>pergunta</MenuItem>
+            <MenuItem value={"validation"}>validação</MenuItem>
           </Select>
         </FormControl>
+        <TextField label="Tentativas" type="number" value={maxTryes} onChange={e=>setMaxTryes(e.target.value)}></TextField>
       </div>
       <div>
         {tipoSwitch(Tipo)}

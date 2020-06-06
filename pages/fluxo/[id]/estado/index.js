@@ -28,39 +28,9 @@ export default function EstadoPage(props) {
   const [fluxo, setFluxo] = useState();
 
   const loadFluxo = () => {
-    api.get(`fluxo/${id}`).then((res) => {
+    api.get(`flux/${id}`).then((res) => {
       setFluxo(res.data);
     }).catch();
-  };
-
-  const Submit = () => {
-    if (estado._id) {
-      api
-        .post(`fluxo/${fluxo._id}/estado/${estado._id}`, {
-          nome,
-          textoInicial,
-          textoFalha,
-          tipo: Tipo,
-          tipoEntrada,
-          proximoEstado,
-        })
-        .then((res) => {
-          console.log(res);
-        });
-    } else {
-      api
-        .post(`fluxo/${fluxo._id}/estado`, {
-          nome,
-          textoInicial,
-          textoFalha,
-          tipo: Tipo,
-          tipoEntrada,
-          proximoEstado,
-        })
-        .then((res) => {
-          console.log(res);
-        });
-    }
   };
 
   useEffect(loadFluxo, [id]);
