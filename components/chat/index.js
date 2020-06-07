@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
   },
-  card: {},
   title: {
     background: "#009688",
   },
@@ -60,7 +59,7 @@ export default function Variants() {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card>
       <CardHeader title="Chat Demo" className={classes.title} />
       <CardContent className={classes.content}>
         {chat._id ? (
