@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     height: "60vh",
-    flexGrow: 1,
     overflow: "auto",
   },
   inputTexto: {
