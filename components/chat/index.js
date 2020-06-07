@@ -59,7 +59,7 @@ export default function Variants() {
   };
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardHeader title="Chat Demo" className={classes.title} />
       <CardContent className={classes.content}>
         {chat._id ? (
