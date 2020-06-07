@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#009688",
   },
   content: {
-    height: "70%",
+    height: "60vh",
     flexGrow: 1,
     overflow: "auto",
   },
