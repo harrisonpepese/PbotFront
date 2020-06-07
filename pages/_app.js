@@ -1,44 +1,37 @@
-import './style.css'
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import { Typography, Grid, Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import Link from 'next/link'
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    justifyContent: "center",
-    textAlign: "center",
-  },
-  content:{
-    flexGrow: 1,
-    justifyContent: "center",
-    textAlign: "center",
-    padding: theme.spacing(2)
-  },
-  text:{
-    margin: theme.spacing(2)
-  }
-}));
-export default function MyApp({ Component, pageProps }) {
-    const classes = useStyles();
+import React from 'react';
+import PropTypes from 'prop-types';
+import Head from 'next/head';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from '../src/theme';
+
+export default function MyApp(props) {
+  const { Component, pageProps } = props;
+
+  React.useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
+
   return (
-    <div className={classes.root}>
-      <AppBar position="static" color="primary">
-        <Toolbar>
-          <Typography variant="h6" >Pbot</Typography>
-          <Link href="/fluxo">
-          <Typography variant="h6" className={classes.text}>Fluxos</Typography>
-            </Link>
-        </Toolbar>
-      </AppBar>
-      <Grid container className={classes.content}>
-        <Grid item xs={12} sm={11} md={10} lg={9} xl={8}>
-          <Paper elevation={3}>
-            <Component {...pageProps} />
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
+    <React.Fragment>
+      <Head>
+        <title>My page</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </React.Fragment>
   );
 }
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
+};
