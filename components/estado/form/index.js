@@ -12,8 +12,8 @@ import {
   ListItemText,
   Collapse,
 } from "@material-ui/core";
-import Dado from '../../../components/estado/tipo/Dado'
-import Opcoes from '../../../components/estado/tipo/Opcoes'
+import Dado from '../tipo/Dado'
+import Opcoes from '../tipo/Opcoes'
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from 'next/router'
