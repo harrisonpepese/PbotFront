@@ -1,7 +1,7 @@
 import './style.css'
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from 'next/link'
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +34,9 @@ export default function MyApp({ Component, pageProps }) {
       </AppBar>
       <Grid container className={classes.content}>
         <Grid item xs={12} sm={11} md={10} lg={9} xl={8}>
-          <Component {...pageProps} />
+          <Paper elevation={3}>
+            <Component {...pageProps} />
+          </Paper>
         </Grid>
       </Grid>
     </div>
