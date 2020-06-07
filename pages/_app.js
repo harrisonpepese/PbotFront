@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
   },
+  text:{
+    margin: theme.spacing(2)
+  }
 }));
 export default function MyApp({ Component, pageProps }) {
     const classes = useStyles();
@@ -17,12 +20,10 @@ export default function MyApp({ Component, pageProps }) {
     <div className={classes.root}>
       <AppBar position="static" color="primary">
         <Toolbar>
-          <Typography variant="h6">Pbot</Typography>
+          <Typography variant="h6" >Pbot</Typography>
           <Link href="/fluxo">
-          <Typography variant="h6">Fluxo</Typography>
+          <Typography variant="h6" className={classes.text}>Fluxos</Typography>
             </Link>
-          <Link href="/estado">
-          <Typography variant="h6">Estado</Typography></Link>
         </Toolbar>
       </AppBar>
       <Grid container className={classes.root}>
