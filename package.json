@@ -5,9 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prestart": "next build",
-    "start": "next start -p $PORT",
-    "heroku-postbuild": "npm run build"
+    "postinstall": "npm run build",
+    "start": "next start -p $PORT"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
